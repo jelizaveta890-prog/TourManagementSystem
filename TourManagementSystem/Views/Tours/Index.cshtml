@@ -1,0 +1,146 @@
+@model IEnumerable<TourManagementSystem.Models.Tour>
+
+@{
+    ViewData["Title"] = "Seikluste keskus";
+}
+
+<style>
+    /* 1. Üldine taust - pehme gradient, mis tundub luksuslik */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* 2. Klaasiefektiga konteiner (Glassmorphism) */
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 30px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        padding: 40px;
+        margin-top: 50px;
+        transition: all 0.3s ease;
+    }
+
+    /* 3. Pealkirja stiil */
+    .hero-title {
+        background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
+
+    /* 4. Lisa uus reis nupp - ujuv ja värviline */
+    .btn-glow {
+        background: linear-gradient(45deg, #00c6ff, #0072ff);
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        box-shadow: 0 10px 20px rgba(0, 114, 255, 0.3);
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+        .btn-glow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 114, 255, 0.5);
+            color: white;
+        }
+
+    /* 5. Tabeli ridade animeerimine */
+    .tour-row {
+        transition: all 0.2s ease;
+        border-radius: 15px;
+    }
+
+        .tour-row:hover {
+            background: rgba(255, 255, 255, 0.9) !important;
+            transform: scale(1.01);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+    /* 6. Hinnasilt - tee see "kalliks" */
+    .premium-price {
+        background: #2d3436;
+        color: #fab1a0;
+        padding: 8px 15px;
+        border-radius: 12px;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+    }
+
+    /* Peidame tavalise tabeli piirjooned */
+    .table borderless td, .table borderless th {
+        border: none;
+    }
+</style>
+
+<div class="container pb-5">
+    <div class="glass-panel mt-5 animate__animated animate__fadeIn">
+
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div>
+                <h1 class="display-4 hero-title mb-0">Meie Seiklused</h1>
+                <p class="text-muted">Avasta maailma stiilselt</p>
+            </div>
+            <a asp-action="Create" class="btn-glow">
+                <i class="bi bi-plus-lg"></i> + Lisa uus seiklus
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr class="text-uppercase text-muted small fw-bolder">
+                        <th class="ps-4">Reisi nimi</th>
+                        <th>Sihtkoht</th>
+                        <th class="text-center">Investeering</th>
+                        <th>Kirjeldus</th>
+                        <th class="text-end pe-4">Haldus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="tour-row">
+                            <td class="ps-4 py-4">
+                                <span class="h5 fw-bold text-dark">@Html.DisplayFor(modelItem => item.Name)</span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-3">
+                                        📍
+                                    </div>
+                                    <span>@Html.DisplayFor(modelItem => item.Destination)</span>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span class="premium-price shadow-sm">
+                                    @Html.DisplayFor(modelItem => item.Price) €
+                                </span>
+                            </td>
+                            <td>
+                                <p class="text-muted mb-0 small" style="max-width: 250px;">
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </p>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group shadow-sm rounded-pill overflow-hidden">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-white btn-sm px-3 text-warning">Muuda</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-white btn-sm px-3 text-info">Vaata</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-white btn-sm px-3 text-danger">Kustuta</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
