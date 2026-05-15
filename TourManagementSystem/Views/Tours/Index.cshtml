@@ -1,146 +1,188 @@
 @model IEnumerable<TourManagementSystem.Models.Tour>
 
 @{
-    ViewData["Title"] = "Seikluste keskus";
+    ViewData["Title"] = "Our Adventures";
+    var culture = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 }
 
 <style>
-    /* 1. Üldine taust - pehme gradient, mis tundub luksuslik */
     body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                    url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
         min-height: 100vh;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    /* 2. Klaasiefektiga konteiner (Glassmorphism) */
-    .glass-panel {
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 30px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-        padding: 40px;
-        margin-top: 50px;
-        transition: all 0.3s ease;
-    }
-
-    /* 3. Pealkirja stiil */
-    .hero-title {
-        background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-weight: 800;
-        letter-spacing: -1px;
-    }
-
-    /* 4. Lisa uus reis nupp - ujuv ja värviline */
-    .btn-glow {
-        background: linear-gradient(45deg, #00c6ff, #0072ff);
-        border: none;
         color: white;
-        padding: 12px 30px;
-        border-radius: 50px;
-        font-weight: 600;
-        box-shadow: 0 10px 20px rgba(0, 114, 255, 0.3);
-        transition: all 0.3s ease;
-        text-decoration: none;
     }
 
-        .btn-glow:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(0, 114, 255, 0.5);
-            color: white;
-        }
-
-    /* 5. Tabeli ridade animeerimine */
-    .tour-row {
-        transition: all 0.2s ease;
-        border-radius: 15px;
+    .adventure-header {
+        text-align: center;
+        padding: 60px 0 40px;
     }
 
-        .tour-row:hover {
-            background: rgba(255, 255, 255, 0.9) !important;
-            transform: scale(1.01);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
+    /* Modernne kaartide võrgustik */
+    .tour-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 30px;
+        padding: 20px;
+    }
 
-    /* 6. Hinnasilt - tee see "kalliks" */
-    .premium-price {
-        background: #2d3436;
-        color: #fab1a0;
+    .tour-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 30px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+    }
+
+    .tour-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    /* Pildi osa kaardil */
+    .tour-image {
+        height: 200px;
+        width: 100%;
+        background: #333;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .tour-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .price-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #27ae60;
+        color: white;
         padding: 8px 15px;
-        border-radius: 12px;
-        font-family: 'Courier New', monospace;
+        border-radius: 15px;
         font-weight: bold;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
-    /* Peidame tavalise tabeli piirjooned */
-    .table borderless td, .table borderless th {
-        border: none;
+    .tour-content {
+        padding: 25px;
+    }
+
+    .tour-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    .tour-dest {
+        color: #00d2ff;
+        font-weight: 500;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .tour-desc {
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.8);
+        line-height: 1.6;
+        margin-bottom: 20px;
+        height: 60px;
+        overflow: hidden;
+    }
+
+    /* Tegevusnupud kaardi all */
+    .tour-actions {
+        display: flex;
+        gap: 10px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 20px;
+    }
+
+    .btn-action {
+        flex: 1;
+        padding: 10px;
+        border-radius: 12px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-edit { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+    .btn-view { background: rgba(0, 210, 255, 0.2); color: #00d2ff; }
+    .btn-cancel { background: rgba(255, 71, 87, 0.2); color: #ff4757; }
+
+    .btn-action:hover {
+        background: white;
+        color: black;
+    }
+
+    .btn-create {
+        background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+        color: white;
+        padding: 15px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+
+    .btn-create:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(0, 210, 255, 0.4);
+        color: white;
     }
 </style>
 
-<div class="container pb-5">
-    <div class="glass-panel mt-5 animate__animated animate__fadeIn">
+<div class="container">
+    <div class="adventure-header">
+        <h1 class="display-4 fw-bold mb-4">
+            @(culture == "et" ? "🌍 Meie Seiklused" : culture == "ru" ? "🌍 Наши Приключения" : "🌍 Our Adventures")
+        </h1>
+        <a asp-action="Create" class="btn-create">
+            @(culture == "et" ? "+ Broneeri uus reis" : culture == "ru" ? "+ Забронировать тур" : "+ Book a new tour")
+        </a>
+    </div>
 
-        <div class="d-flex justify-content-between align-items-center mb-5">
-            <div>
-                <h1 class="display-4 hero-title mb-0">Meie Seiklused</h1>
-                <p class="text-muted">Avasta maailma stiilselt</p>
+    <div class="tour-grid">
+        @foreach (var item in Model)
+        {
+            <div class="tour-card shadow">
+                <div class="tour-image">
+                    <span class="price-badge">@item.Price €</span>
+                    <img src="https://source.unsplash.com/featured/?@item.Destination" alt="tour image">
+                </div>
+                <div class="tour-content">
+                    <div class="tour-title">@item.Name</div>
+                    <div class="tour-dest">📍 @item.Destination</div>
+                    <p class="tour-desc">@item.Description</p>
+                    
+                    <div class="tour-actions">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action btn-edit">
+                            @(culture == "et" ? "Muuda" : culture == "ru" ? "Изм." : "Edit")
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn-action btn-view">
+                            @(culture == "et" ? "Vaata" : culture == "ru" ? "Инфо" : "View")
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-cancel">
+                            @(culture == "et" ? "Loobu" : culture == "ru" ? "Отмена" : "Cancel")
+                        </a>
+                    </div>
+                </div>
             </div>
-            <a asp-action="Create" class="btn-glow">
-                <i class="bi bi-plus-lg"></i> + Lisa uus seiklus
-            </a>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table align-middle">
-                <thead>
-                    <tr class="text-uppercase text-muted small fw-bolder">
-                        <th class="ps-4">Reisi nimi</th>
-                        <th>Sihtkoht</th>
-                        <th class="text-center">Investeering</th>
-                        <th>Kirjeldus</th>
-                        <th class="text-end pe-4">Haldus</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr class="tour-row">
-                            <td class="ps-4 py-4">
-                                <span class="h5 fw-bold text-dark">@Html.DisplayFor(modelItem => item.Name)</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-3">
-                                        📍
-                                    </div>
-                                    <span>@Html.DisplayFor(modelItem => item.Destination)</span>
-                                </div>
-                            </td>
-                            <td class="text-center">
-                                <span class="premium-price shadow-sm">
-                                    @Html.DisplayFor(modelItem => item.Price) €
-                                </span>
-                            </td>
-                            <td>
-                                <p class="text-muted mb-0 small" style="max-width: 250px;">
-                                    @Html.DisplayFor(modelItem => item.Description)
-                                </p>
-                            </td>
-                            <td class="text-end pe-4">
-                                <div class="btn-group shadow-sm rounded-pill overflow-hidden">
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-white btn-sm px-3 text-warning">Muuda</a>
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-white btn-sm px-3 text-info">Vaata</a>
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-white btn-sm px-3 text-danger">Kustuta</a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+        }
     </div>
 </div>

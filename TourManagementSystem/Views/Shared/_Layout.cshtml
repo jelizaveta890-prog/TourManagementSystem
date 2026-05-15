@@ -1,19 +1,60 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TourManagementSystem</title>
-    <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TourManagementSystem.styles.css" asp-append-version="true" />
+
+    <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+            }
+
+            /* Stiilne klaasiefektiga navbar */
+            .navbar-custom {
+                background: rgba(255, 255, 255, 0.8) !important;
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            }
+
+            .navbar-brand {
+                font-weight: 600;
+                color: #2c3e50 !important;
+            }
+
+            .nav-link {
+                font-weight: 400;
+                transition: color 0.3s ease;
+            }
+
+                .nav-link:hover {
+                    color: #007bff !important;
+                }
+
+            /* Keelevaliku nupu stiil */
+            .lang-dropdown {
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 15px;
+                border: none;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            .dropdown-item:hover {
+                background-color: #f8f9fa;
+                border-radius: 10px;
+            }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TourManagementSystem</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 navbar-custom fixed-top">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Tours" asp-action="Index">🌍 Reisibüroo</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,27 +62,58 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tours" asp-action="Index">Pealeht</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privaatsus</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle btn btn-light btn-sm rounded-pill px-3 shadow-sm" href="#" id="langMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                🌐 Vali keel
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end lang-dropdown p-2" aria-labelledby="langMenu">
+                                @* Siin on parandatud nupud, mis kutsuvad LanguageControllerit *@
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Language" asp-action="SetLanguage"
+                                       asp-route-culture="et" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">
+                                        🇪🇪 Eesti
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Language" asp-action="SetLanguage"
+                                       asp-route-culture="en" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">
+                                        🇺🇸 English
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Language" asp-action="SetLanguage"
+                                       asp-route-culture="ru" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">
+                                        🇷🇺 Русский
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="container" style="padding-top: 80px;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted bg-white bg-opacity-75">
         <div class="container">
-            &copy; 2026 - TourManagementSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2026 - TourManagementSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privaatsus</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
