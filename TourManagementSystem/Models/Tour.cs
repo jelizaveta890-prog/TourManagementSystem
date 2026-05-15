@@ -15,5 +15,8 @@ namespace TourManagementSystem.Models
         public decimal Price { get; set; } // Hind eurodes
 
         public string Description { get; set; } // Kirjeldus
+
+        //uuenddame siia seose broneeringutega
+        public ICollection <Booking > Bookings { get; set; } = new List<Booking>(); // Seos broneeringutega
     }
 }
