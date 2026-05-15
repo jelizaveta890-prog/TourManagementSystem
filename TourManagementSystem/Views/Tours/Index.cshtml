@@ -1,188 +1,38 @@
 @model IEnumerable<TourManagementSystem.Models.Tour>
 
 @{
-    ViewData["Title"] = "Our Adventures";
-    var culture = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+    ViewData["Title"] = "Index";
 }
 
-<style>
-    body {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                    url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        min-height: 100vh;
-        color: white;
-    }
+<h1>Index</h1>
 
-    .adventure-header {
-        text-align: center;
-        padding: 60px 0 40px;
-    }
-
-    /* Modernne kaartide võrgustik */
-    .tour-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 30px;
-        padding: 20px;
-    }
-
-    .tour-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 30px;
-        overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-    }
-
-    .tour-card:hover {
-        transform: translateY(-10px) scale(1.02);
-        background: rgba(255, 255, 255, 0.2);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    }
-
-    /* Pildi osa kaardil */
-    .tour-image {
-        height: 200px;
-        width: 100%;
-        background: #333;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .tour-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .price-badge {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: #27ae60;
-        color: white;
-        padding: 8px 15px;
-        border-radius: 15px;
-        font-weight: bold;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .tour-content {
-        padding: 25px;
-    }
-
-    .tour-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        color: #fff;
-    }
-
-    .tour-dest {
-        color: #00d2ff;
-        font-weight: 500;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .tour-desc {
-        font-size: 0.9rem;
-        color: rgba(255,255,255,0.8);
-        line-height: 1.6;
-        margin-bottom: 20px;
-        height: 60px;
-        overflow: hidden;
-    }
-
-    /* Tegevusnupud kaardi all */
-    .tour-actions {
-        display: flex;
-        gap: 10px;
-        border-top: 1px solid rgba(255,255,255,0.1);
-        padding-top: 20px;
-    }
-
-    .btn-action {
-        flex: 1;
-        padding: 10px;
-        border-radius: 12px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 0.85rem;
-        font-weight: 600;
-        transition: 0.3s;
-    }
-
-    .btn-edit { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
-    .btn-view { background: rgba(0, 210, 255, 0.2); color: #00d2ff; }
-    .btn-cancel { background: rgba(255, 71, 87, 0.2); color: #ff4757; }
-
-    .btn-action:hover {
-        background: white;
-        color: black;
-    }
-
-    .btn-create {
-        background: linear-gradient(45deg, #00d2ff, #3a7bd5);
-        color: white;
-        padding: 15px 30px;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: bold;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        transition: 0.3s;
-    }
-
-    .btn-create:hover {
-        transform: scale(1.05);
-        box-shadow: 0 15px 30px rgba(0, 210, 255, 0.4);
-        color: white;
-    }
-</style>
-
-<div class="container">
-    <div class="adventure-header">
-        <h1 class="display-4 fw-bold mb-4">
-            @(culture == "et" ? "🌍 Meie Seiklused" : culture == "ru" ? "🌍 Наши Приключения" : "🌍 Our Adventures")
-        </h1>
-        <a asp-action="Create" class="btn-create">
-            @(culture == "et" ? "+ Broneeri uus reis" : culture == "ru" ? "+ Забронировать тур" : "+ Book a new tour")
-        </a>
-    </div>
-
-    <div class="tour-grid">
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Destination)</th>
+            <th>@Html.DisplayNameFor(model => model.Price)</th>
+            <th>@Html.DisplayNameFor(model => model.Description)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
         @foreach (var item in Model)
         {
-            <div class="tour-card shadow">
-                <div class="tour-image">
-                    <span class="price-badge">@item.Price €</span>
-                    <img src="https://source.unsplash.com/featured/?@item.Destination" alt="tour image">
-                </div>
-                <div class="tour-content">
-                    <div class="tour-title">@item.Name</div>
-                    <div class="tour-dest">📍 @item.Destination</div>
-                    <p class="tour-desc">@item.Description</p>
-                    
-                    <div class="tour-actions">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action btn-edit">
-                            @(culture == "et" ? "Muuda" : culture == "ru" ? "Изм." : "Edit")
-                        </a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn-action btn-view">
-                            @(culture == "et" ? "Vaata" : culture == "ru" ? "Инфо" : "View")
-                        </a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-cancel">
-                            @(culture == "et" ? "Loobu" : culture == "ru" ? "Отмена" : "Cancel")
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Destination)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                <td style="white-space: nowrap;">
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
         }
-    </div>
-</div>
+    </tbody>
+</table>

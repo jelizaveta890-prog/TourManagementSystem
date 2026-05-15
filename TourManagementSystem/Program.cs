@@ -1,61 +1,29 @@
 using Microsoft.EntityFrameworkCore;
 using TourManagementSystem;
-using Microsoft.AspNetCore.Localization;
-using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Andmebaasi seadistamine
+// Andmebaasi ühenduse seadistamine
 var connectionString = builder.Configuration.GetConnectionString("TourManagementSystemContext")
-    ?? throw new InvalidOperationException("Connection string 'TourManagementSystemContext' not found.");
+    ?? throw new InvalidOperationException("Andmebaasi ühendust ei leitud.");
 
 builder.Services.AddDbContext<TourManagementSystemContext>(options =>
     options.UseSqlServer(connectionString));
 
-// 2. KEELTE SEADISTAMINE (Lokaliseerimine)
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-builder.Services.AddControllersWithViews()
-    .AddViewLocalization()
-    .AddDataAnnotationsLocalization();
-
-builder.Services.Configure<RequestLocalizationOptions>(options =>
-{
-    // Määrame toetatud keeled, 'en' on esimene (vaikevalik)
-    var supportedCultures = new[] {
-        new CultureInfo("en"),
-        new CultureInfo("et"),
-        new CultureInfo("ru")
-    };
-
-    options.DefaultRequestCulture = new RequestCulture("en"); // Alustab alati inglise keeles
-    options.SupportedCultures = supportedCultures;
-    options.SupportedUICultures = supportedCultures;
-
-    // EEMALDAME kõik muud pakkujad (nagu brauseri seaded) 
-    // ja jätame AINULT küpsise (Cookie), et sinu valik jääks püsima.
-    options.RequestCultureProviders.Clear();
-    options.RequestCultureProviders.Add(new CookieRequestCultureProvider());
-});
+// Lisame tavalised kontrollerid ja vaated
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// 3. AUTOMAATNE ANDMEBAASI LOOMINE
+// Automaatne andmebaasi loomine käivitamisel
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    try
-    {
-        var context = services.GetRequiredService<TourManagementSystemContext>();
-        context.Database.EnsureCreated();
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine("Andmebaasi viga: " + ex.Message);
-    }
+    var context = services.GetRequiredService<TourManagementSystemContext>();
+    context.Database.EnsureCreated();
 }
 
-// 4. Veebiserveri seadistamine
+// Veebiserveri põhiblokk
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -63,19 +31,15 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // Lisame kindluse mõttes ka selle
+app.UseStaticFiles();
+
 app.UseRouting();
 
-// AKTIVEERI KEELTE KASUTAMINE (peab olema enne Authorizationit)
-app.UseRequestLocalization();
-
 app.UseAuthorization();
-app.MapStaticAssets();
 
-// 5. MARSRUUTIMINE (Suunab kohe Tours lehele)
+// Vaikimisi suunamine Tours kontrollerile
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Tours}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Tours}/{action=Index}/{id?}");
 
 app.Run();
