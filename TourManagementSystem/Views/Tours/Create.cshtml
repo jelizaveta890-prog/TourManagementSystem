@@ -1,26 +1,30 @@
-@model IEnumerable<TourManagementSystem.Models.Tour>
+@model TourManagementSystem.Models.Tour
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Tour";
 }
 
 <style>
-    .wrap {
-        padding: 28px 32px;
+    .page-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 16px;
+        min-height: 80vh;
+        background: #f5f6fa;
     }
 
-    .hero {
+    .form-card {
         background: white;
         border: 1px solid #eee;
         border-radius: 16px;
-        padding: 28px 32px;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        padding: 40px 36px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
     }
 
-    .hero-eyebrow {
+    .form-eyebrow {
         font-size: 11px;
         font-weight: 600;
         color: #1D9E75;
@@ -29,283 +33,130 @@
         margin-bottom: 6px;
     }
 
-    .hero-title {
-        font-size: 26px;
+    .form-title {
+        font-size: 22px;
         font-weight: 600;
         color: #111;
         margin-bottom: 4px;
     }
 
-    .hero-sub {
+    .form-sub {
         font-size: 13px;
         color: #888;
+        margin-bottom: 28px;
     }
 
-    .btn-add {
+    .field {
+        margin-bottom: 18px;
+    }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #e0e0ee;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #111;
+            background: #fafafa;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color .2s, box-shadow .2s;
+            font-family: inherit;
+        }
+
+            .field input:focus,
+            .field textarea:focus {
+                border-color: #1D9E75;
+                box-shadow: 0 0 0 3px rgba(29,158,117,0.1);
+                background: white;
+            }
+
+        .field textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+    .text-danger {
+        color: #e53935;
+        font-size: 12px;
+        margin-top: 4px;
+        display: block;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
         background: #1D9E75;
         color: white;
         border: none;
-        border-radius: 10px;
-        padding: 11px 20px;
-        font-size: 13px;
+        border-radius: 8px;
+        font-size: 14px;
         font-weight: 600;
         cursor: pointer;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
+        margin-top: 8px;
+        transition: background .2s;
+        font-family: inherit;
     }
 
-        .btn-add:hover {
+        .btn-submit:hover {
             background: #0F6E56;
-            color: white;
         }
 
-    .stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-        margin-bottom: 20px;
-    }
-
-    .stat {
-        background: white;
-        border: 1px solid #eee;
-        border-radius: 12px;
-        padding: 16px 20px;
-    }
-
-    .stat-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 8px;
-        background: #E1F5EE;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 10px;
-        font-size: 18px;
-        color: #0F6E56;
-    }
-
-    .stat-num {
-        font-size: 22px;
-        font-weight: 600;
-        color: #111;
-    }
-
-    .stat-label {
-        font-size: 12px;
-        color: #888;
-        margin-top: 2px;
-    }
-
-    .section-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 14px;
-    }
-
-    .section-title {
-        font-size: 15px;
-        font-weight: 600;
-        color: #111;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        background: #E1F5EE;
-        color: #0F6E56;
-        font-size: 11px;
-        font-weight: 600;
-        padding: 2px 10px;
-        border-radius: 100px;
-    }
-
-    .tours-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 14px;
-    }
-
-    .tour-card {
-        background: white;
-        border: 1px solid #eee;
-        border-radius: 12px;
-        overflow: hidden;
-        transition: border-color .15s;
-    }
-
-        .tour-card:hover {
-            border-color: #9FE1CB;
-        }
-
-    .card-thumb {
-        height: 80px;
-        background: #E1F5EE;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 28px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .card-body {
-        padding: 14px 16px;
-    }
-
-    .card-name {
-        font-size: 14px;
-        font-weight: 600;
-        color: #111;
-        margin-bottom: 3px;
-    }
-
-    .card-dest {
-        font-size: 12px;
-        color: #888;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        margin-bottom: 14px;
-    }
-
-    .card-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .price {
-        font-size: 17px;
-        font-weight: 600;
-        color: #1D9E75;
-    }
-
-    .actions {
-        display: flex;
-        gap: 5px;
-    }
-
-    .act {
-        width: 30px;
-        height: 30px;
-        border-radius: 6px;
-        border: 1px solid #eee;
-        background: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 14px;
         font-size: 13px;
         color: #888;
-        transition: all .15s;
+        text-decoration: none;
     }
 
-        .act:hover {
-            background: #f5f5f5;
+        .back-link:hover {
+            color: #1D9E75;
         }
-
-        .act.view:hover {
-            background: #E1F5EE;
-            border-color: #9FE1CB;
-            color: #0F6E56;
-        }
-
-        .act.del:hover {
-            background: #FCEBEB;
-            border-color: #F7C1C1;
-            color: #A32D2D;
-        }
-
-    .empty {
-        text-align: center;
-        padding: 60px 20px;
-        background: white;
-        border: 1px solid #eee;
-        border-radius: 12px;
-        color: #888;
-    }
-
-    .empty-icon {
-        font-size: 36px;
-        margin-bottom: 12px;
-    }
-
-    .empty-text {
-        font-size: 14px;
-    }
 </style>
 
-<div class="wrap">
-    <div class="hero">
-        <div>
-            <div class="hero-eyebrow">Tour catalog</div>
-            <div class="hero-title">All Tours</div>
-            <div class="hero-sub">Manage and explore your travel offerings</div>
-        </div>
-        <a asp-action="Create" class="btn-add">+ Add New Tour</a>
-    </div>
+<div class="page-wrap">
+    <div class="form-card">
+        <div class="form-eyebrow">Tour catalog</div>
+        <div class="form-title">✈️ New Tour</div>
+        <div class="form-sub">Fill in the details to add a new tour</div>
 
-    <div class="stats">
-        <div class="stat">
-            <div class="stat-icon">🗺️</div>
-            <div class="stat-num">@Model.Count()</div>
-            <div class="stat-label">Total tours</div>
-        </div>
-        <div class="stat">
-            <div class="stat-icon">📍</div>
-            <div class="stat-num">@Model.Select(t => t.Destination).Distinct().Count()</div>
-            <div class="stat-label">Destinations</div>
-        </div>
-        <div class="stat">
-            <div class="stat-icon">💶</div>
-            <div class="stat-num">€ @Model.Any() ? Model.Min(t => t.Price).ToString() : "—"</div>
-            <div class="stat-label">Starting from</div>
-        </div>
-    </div>
+        <form asp-action="Create" method="post">
+            <div class="field">
+                <label asp-for="Name">Tour Name</label>
+                <input asp-for="Name" placeholder="e.g. Summer in Barcelona" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Destination">Destination</label>
+                <input asp-for="Destination" placeholder="e.g. Barcelona, Spain" />
+                <span asp-validation-for="Destination" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Price">Price (€)</label>
+                <input asp-for="Price" type="number" placeholder="e.g. 499" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Description">Description</label>
+                <textarea asp-for="Description" placeholder="Describe what makes this tour special..."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
 
-    <div class="section-header">
-        <div class="section-title">
-            Tours
-            <span class="badge">@Model.Count() tours</span>
-        </div>
+            <button type="submit" class="btn-submit">Create Tour</button>
+            <a asp-action="Index" class="back-link">← Back to Tours</a>
+        </form>
     </div>
-
-    @if (!Model.Any())
-    {
-        <div class="empty">
-            <div class="empty-icon">✈️</div>
-            <div class="empty-text">No tours yet. Add your first one!</div>
-        </div>
-    }
-    else
-    {
-        <div class="tours-grid">
-            @foreach (var tour in Model)
-            {
-                <div class="tour-card">
-                    <div class="card-thumb">✈️</div>
-                    <div class="card-body">
-                        <div class="card-name">@tour.Name</div>
-                        <div class="card-dest">📍 @tour.Destination</div>
-                        <div class="card-footer">
-                            <div class="price">€ @tour.Price</div>
-                            <div class="actions">
-                                <a asp-action="Details" asp-route-id="@tour.Id" class="act view" title="View">👁</a>
-                                <a asp-action="Edit" asp-route-id="@tour.Id" class="act" title="Edit">✏️</a>
-                                <a asp-action="Delete" asp-route-id="@tour.Id" class="act del" title="Delete">🗑</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    }
 </div>

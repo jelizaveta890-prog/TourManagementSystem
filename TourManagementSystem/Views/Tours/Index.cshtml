@@ -1,6 +1,7 @@
 @model IEnumerable<TourManagementSystem.Models.Tour>
 
 @{
+<<<<<<< Updated upstream
     ViewData["Title"] = "Index";
 }
 
@@ -36,3 +37,305 @@
         }
     </tbody>
 </table>
+=======
+    ViewData["Title"] = "Tours";
+}
+
+<style>
+    .wrap {
+        padding: 28px 32px;
+    }
+
+    .hero {
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 16px;
+        padding: 28px 32px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .hero-eyebrow {
+        font-size: 11px;
+        font-weight: 600;
+        color: #1D9E75;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+    }
+
+    .hero-title {
+        font-size: 26px;
+        font-weight: 600;
+        color: #111;
+        margin-bottom: 4px;
+    }
+
+    .hero-sub {
+        font-size: 13px;
+        color: #888;
+    }
+
+    .btn-add {
+        background: #1D9E75;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 11px 20px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        white-space: nowrap;
+    }
+
+        .btn-add:hover {
+            background: #0F6E56;
+            color: white;
+        }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .stat {
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 16px 20px;
+    }
+
+    .stat-icon {
+        font-size: 22px;
+        margin-bottom: 8px;
+    }
+
+    .stat-num {
+        font-size: 22px;
+        font-weight: 600;
+        color: #111;
+    }
+
+    .stat-label {
+        font-size: 12px;
+        color: #888;
+        margin-top: 2px;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+    }
+
+    .section-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: #111;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .badge-count {
+        background: #E1F5EE;
+        color: #0F6E56;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 2px 10px;
+        border-radius: 100px;
+    }
+
+    .tours-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 14px;
+    }
+
+    .tour-card {
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: border-color .15s, box-shadow .15s;
+    }
+
+        .tour-card:hover {
+            border-color: #9FE1CB;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+
+    .card-thumb {
+        height: 80px;
+        background: #E1F5EE;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .card-body {
+        padding: 14px 16px;
+    }
+
+    .card-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #111;
+        margin-bottom: 3px;
+    }
+
+    .card-dest {
+        font-size: 12px;
+        color: #888;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 14px;
+    }
+
+    .card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .price {
+        font-size: 17px;
+        font-weight: 600;
+        color: #1D9E75;
+    }
+
+    .actions {
+        display: flex;
+        gap: 5px;
+    }
+
+    .act {
+        width: 30px;
+        height: 30px;
+        border-radius: 6px;
+        border: 1px solid #eee;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 13px;
+        color: #888;
+        transition: all .15s;
+    }
+
+        .act.view:hover {
+            background: #E1F5EE;
+            border-color: #9FE1CB;
+        }
+
+        .act.edit:hover {
+            background: #FFF8E1;
+            border-color: #FFE082;
+        }
+
+        .act.del:hover {
+            background: #FCEBEB;
+            border-color: #F7C1C1;
+        }
+
+    .empty {
+        text-align: center;
+        padding: 60px 20px;
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        color: #888;
+    }
+
+    .empty-icon {
+        font-size: 40px;
+        margin-bottom: 12px;
+    }
+</style>
+
+<div class="wrap">
+
+    <!-- Hero header -->
+    <div class="hero">
+        <div>
+            <div class="hero-eyebrow">Tour catalog</div>
+            <div class="hero-title">All Tours</div>
+            <div class="hero-sub">Manage and explore your travel offerings</div>
+        </div>
+        <a asp-action="Create" class="btn-add">+ Add New Tour</a>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-icon">🗺️</div>
+            <div class="stat-num">@Model.Count()</div>
+            <div class="stat-label">Total tours</div>
+        </div>
+        <div class="stat">
+            <div class="stat-icon">📍</div>
+            <div class="stat-num">@Model.Select(t => t.Destination).Distinct().Count()</div>
+            <div class="stat-label">Destinations</div>
+        </div>
+        <div class="stat">
+            <div class="stat-icon">💶</div>
+            <div class="stat-num">€ @(Model.Any() ? Model.Min(t => t.Price).ToString() : "—")</div>
+            <div class="stat-label">Starting from</div>
+        </div>
+    </div>
+
+    <!-- Section title -->
+    <div class="section-header">
+        <div class="section-title">
+            Tours <span class="badge-count">@Model.Count() total</span>
+        </div>
+    </div>
+
+    <!-- Empty state -->
+    @if (!Model.Any())
+    {
+        <div class="empty">
+            <div class="empty-icon">✈️</div>
+            <div>No tours yet. <a asp-action="Create">Add your first one!</a></div>
+        </div>
+    }
+    else
+    {
+        <!-- Cards grid -->
+        <div class="tours-grid">
+            @foreach (var tour in Model)
+            {
+                <div class="tour-card">
+                    <div class="card-thumb">✈️</div>
+                    <div class="card-body">
+                        <div class="card-name">@tour.Name</div>
+                        <div class="card-dest">📍 @tour.Destination</div>
+                        <div class="card-footer">
+                            <div class="price">€ @tour.Price</div>
+                            <div class="actions">
+                                <a asp-action="Details" asp-route-id="@tour.Id" class="act view" title="View">👁</a>
+                                <a asp-action="Edit" asp-route-id="@tour.Id" class="act edit" title="Edit">✏️</a>
+                                <a asp-action="Delete" asp-route-id="@tour.Id" class="act del" title="Delete">🗑</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</div>
+>>>>>>> Stashed changes

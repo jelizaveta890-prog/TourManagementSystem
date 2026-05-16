@@ -15,7 +15,8 @@ public class ToursController : Controller
     // GET: TOURS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Tour.ToListAsync());
+        var tours = await _context.Tour.ToListAsync();
+        return View(tours ?? new List<Tour>());
     }
 
     // GET: TOURS/Details/5
