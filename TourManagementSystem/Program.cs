@@ -1,45 +1,42 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TourManagementSystem;
+using System.Diagnostics;
+using TourManagementSystem.Models;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Andmebaasi ühenduse seadistamine
-var connectionString = builder.Configuration.GetConnectionString("TourManagementSystemContext")
-    ?? throw new InvalidOperationException("Andmebaasi ühendust ei leitud.");
-
-builder.Services.AddDbContext<TourManagementSystemContext>(options =>
-    options.UseSqlServer(connectionString));
-
-// Lisame tavalised kontrollerid ja vaated
-builder.Services.AddControllersWithViews();
-
-var app = builder.Build();
-
-// Automaatne andmebaasi loomine käivitamisel
-using (var scope = app.Services.CreateScope())
+namespace TourManagementSystem.Controllers
 {
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<TourManagementSystemContext>();
-    context.Database.EnsureCreated();
+    public class HomeController : Controller
+    {
+        // Injecting the database context to access our tours
+        private readonly TourManagementSystemContext _context;
+
+        public HomeController(TourManagementSystemContext context)
+        {
+            _context = context;
+        }
+
+        // GET: Home
+        public async Task<IActionResult> Index()
+        {
+            // C# Logic: Fetch top 3 highest-rated tours from SQL Server for the home showcase
+            var popularTours = await _context.Tour
+                .OrderByDescending(t => t.Rating)
+                .Take(3)
+                .ToListAsync();
+
+            // Pass the dynamic list straight to the View
+            return View(popularTours);
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
 }
-
-// Veebiserveri põhiblokk
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-// Vaikimisi suunamine Tours kontrollerile
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Tours}/{action=Index}/{id?}");
-
-app.Run();
