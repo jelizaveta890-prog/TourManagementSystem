@@ -1,0 +1,162 @@
+@model TourManagementSystem.Models.Tour
+
+@{
+    ViewData["Title"] = "Create Tour";
+}
+
+<style>
+    .page-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 16px;
+        min-height: 80vh;
+        background: #f5f6fa;
+    }
+
+    .form-card {
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 16px;
+        padding: 40px 36px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+
+    .form-eyebrow {
+        font-size: 11px;
+        font-weight: 600;
+        color: #1D9E75;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+    }
+
+    .form-title {
+        font-size: 22px;
+        font-weight: 600;
+        color: #111;
+        margin-bottom: 4px;
+    }
+
+    .form-sub {
+        font-size: 13px;
+        color: #888;
+        margin-bottom: 28px;
+    }
+
+    .field {
+        margin-bottom: 18px;
+    }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #e0e0ee;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #111;
+            background: #fafafa;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color .2s, box-shadow .2s;
+            font-family: inherit;
+        }
+
+            .field input:focus,
+            .field textarea:focus {
+                border-color: #1D9E75;
+                box-shadow: 0 0 0 3px rgba(29,158,117,0.1);
+                background: white;
+            }
+
+        .field textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+    .text-danger {
+        color: #e53935;
+        font-size: 12px;
+        margin-top: 4px;
+        display: block;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background: #1D9E75;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: background .2s;
+        font-family: inherit;
+    }
+
+        .btn-submit:hover {
+            background: #0F6E56;
+        }
+
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 14px;
+        font-size: 13px;
+        color: #888;
+        text-decoration: none;
+    }
+
+        .back-link:hover {
+            color: #1D9E75;
+        }
+</style>
+
+<div class="page-wrap">
+    <div class="form-card">
+        <div class="form-eyebrow">Tour catalog</div>
+        <div class="form-title">✈️ New Tour</div>
+        <div class="form-sub">Fill in the details to add a new tour</div>
+
+        <form asp-action="Create" method="post">
+            <div class="field">
+                <label asp-for="Name">Tour Name</label>
+                <input asp-for="Name" placeholder="e.g. Summer in Barcelona" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Destination">Destination</label>
+                <input asp-for="Destination" placeholder="e.g. Barcelona, Spain" />
+                <span asp-validation-for="Destination" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Price">Price (€)</label>
+                <input asp-for="Price" type="number" placeholder="e.g. 499" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Description">Description</label>
+                <textarea asp-for="Description" placeholder="Describe what makes this tour special..."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn-submit">Create Tour</button>
+            <a asp-action="Index" class="back-link">← Back to Tours</a>
+        </form>
+    </div>
+</div>
