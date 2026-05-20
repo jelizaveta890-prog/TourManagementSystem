@@ -1,8 +1,286 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<TourManagementSystem.Models.Tour>
+
+@{
+    ViewData["Title"] = "Home - Travel Agency";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    /* Premium Hero Banner */
+    .hero-banner {
+        background: linear-gradient(135deg, #1D9E75 0%, #0F6E56 100%);
+        color: white;
+        border-radius: 24px;
+        padding: 80px 40px;
+        text-align: center;
+        margin-bottom: 50px;
+        box-shadow: 0 12px 30px rgba(29, 158, 117, 0.25);
+    }
+
+    .hero-title {
+        font-size: 46px;
+        font-weight: 800;
+        margin-bottom: 16px;
+        letter-spacing: -0.5px;
+    }
+
+    .hero-subtitle {
+        font-size: 19px;
+        opacity: 0.9;
+        margin-bottom: 30px;
+    }
+
+    .btn-main-explore {
+        background: white;
+        color: #0F6E56;
+        font-weight: 700;
+        padding: 14px 36px;
+        border-radius: 12px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.25s ease;
+    }
+
+        .btn-main-explore:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            color: #0F6E56;
+        }
+
+    .home-section-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #111;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+
+    .home-section-subtitle {
+        font-size: 15px;
+        color: #666;
+        text-align: center;
+        margin-bottom: 32px;
+    }
+
+    /* Grid Layout for Top 3 Cards */
+    .tours-showcase-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin-bottom: 60px;
+    }
+
+    .tour-promo-card {
+        background: white;
+        border: 1px solid #eaeaea;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .tour-promo-card:hover {
+            transform: translateY(-6px);
+            border-color: #9FE1CB;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+        }
+
+    .tour-promo-thumb {
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 55px;
+        background: #F4FBF9;
+        border-bottom: 1px solid #eaeaea;
+    }
+
+    .tour-promo-body {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .tour-promo-name {
+        font-size: 20px;
+        font-weight: 700;
+        color: #111;
+        margin-bottom: 6px;
+    }
+
+    .tour-promo-meta {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 12px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .rating-pill {
+        background: #FFF9E6;
+        color: #F5A623;
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 13px;
+    }
+
+    .tour-promo-desc {
+        font-size: 14px;
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 24px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        height: 66px;
+    }
+
+    .tour-promo-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid #f5f5f5;
+        padding-top: 18px;
+        margin-top: auto;
+    }
+
+    .tour-promo-price {
+        font-size: 22px;
+        font-weight: 800;
+        color: #1D9E75;
+    }
+
+    .btn-promo-book {
+        background: #1D9E75;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.2s ease;
+    }
+
+        .btn-promo-book:hover {
+            background: #0F6E56;
+            color: white;
+        }
+
+    /* Testimonials layout */
+    .reviews-section {
+        background-color: #F8F9FA;
+        border-radius: 24px;
+        padding: 50px 30px;
+        margin-bottom: 40px;
+    }
+
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+    }
+
+    .review-card {
+        background: white;
+        padding: 24px;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        border: 1px solid #eee;
+    }
+
+    .review-stars {
+        color: #F5A623;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .review-text {
+        font-size: 14px;
+        color: #444;
+        font-style: italic;
+        line-height: 1.5;
+        margin-bottom: 16px;
+    }
+
+    .review-author {
+        font-weight: 700;
+        font-size: 13px;
+        color: #111;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="hero-banner">
+        <h1 class="hero-title">Find Your Next Adventure</h1>
+        <p class="hero-subtitle">Discover amazing places at exclusive prices with Travel Agency</p>
+        <a asp-controller="Tours" asp-action="Index" class="btn-main-explore">Explore All Tours ➔</a>
+    </div>
+
+    <h2 class="home-section-title">🔥 Popular Destinations</h2>
+    <p class="home-section-subtitle">The most popular trips chosen by our adventurers</p>
+
+    <div class="tours-showcase-grid">
+        @if (Model == null || !Model.Any())
+        {
+            <div class="text-center w-100 text-muted py-4">
+                <p>No featured tours found. Connections initializing...</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var tour in Model)
+            {
+                <div class="tour-promo-card">
+                    <div class="tour-promo-thumb">@(string.IsNullOrEmpty(tour.Emoji) ? "✈️" : tour.Emoji)</div>
+                    <div class="tour-promo-body">
+                        <div class="tour-promo-name">@tour.Name</div>
+                        <div class="tour-promo-meta">
+                            <span>📍 @tour.Destination</span>
+                            @if (tour.Rating > 0)
+                            {
+                                <span class="rating-pill">⭐ @tour.Rating.ToString("0.0")</span>
+                            }
+                        </div>
+                        <p class="tour-promo-desc">@tour.Description</p>
+                        <div class="tour-promo-footer">
+                            <div class="tour-promo-price">€ @tour.Price</div>
+                            <a asp-controller="Tours" asp-action="Details" asp-route-id="@tour.Id" class="btn-promo-book">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <div class="reviews-section">
+        <h2 class="home-section-title">💬 What Our Clients Say</h2>
+        <p class="home-section-subtitle">Real experiences from real travelers around the world</p>
+
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"The booking process was incredibly smooth. The weekend in Paris was everything we expected and more. Highly recommended!"</p>
+                <div class="review-author">👤 Sarah Jenkins, UK</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"Unbelievable experience! Exploring Rome's ancient ruins felt so surreal. The guide was knowledgeable and the pricing was excellent."</p>
+                <div class="review-author">👤 Marcus Vance, USA</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">⭐⭐⭐⭐★</div>
+                <p class="review-text">"Our trip to Bali was pure paradise. Incredible landscapes and top-tier service. Will definitely book another holiday through this agency."</p>
+                <div class="review-author">👤 Elena Rostova, Estonia</div>
+            </div>
+        </div>
+    </div>
 </div>

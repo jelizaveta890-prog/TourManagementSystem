@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using TourManagementSystem.Models;
 
@@ -6,9 +7,25 @@ namespace TourManagementSystem.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        // Injecting the database context to pull data from SQL Server
+        private readonly TourManagementSystemContext _context;
+
+        public HomeController(TourManagementSystemContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        // GET: Home
+        public async Task<IActionResult> Index()
+        {
+            // C# Core Logic: Fetch top 3 highest-rated tours from the database
+            var popularTours = await _context.Tour
+                .OrderByDescending(t => t.Rating)
+                .Take(3)
+                .ToListAsync();
+
+            // Pass the data model directly to the home view
+            return View(popularTours);
         }
 
         public IActionResult Privacy()
