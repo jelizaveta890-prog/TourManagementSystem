@@ -1,51 +1,8 @@
 @model IEnumerable<TourManagementSystem.Models.Tour>
 
 @{
-<<<<<<< HEAD
-=======
-
->>>>>>> 7cc49517af0579a1648b73fdc74077624fd62081
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Name)</th>
-            <th>@Html.DisplayNameFor(model => model.Destination)</th>
-            <th>@Html.DisplayNameFor(model => model.Price)</th>
-            <th>@Html.DisplayNameFor(model => model.Description)</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.Destination)</td>
-                <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                <td style="white-space: nowrap;">
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-<<<<<<< HEAD
-</table
-=======
-</table>
-
->>>>>>> 7cc49517af0579a1648b73fdc74077624fd62081
-
 
 <style>
     .wrap {
@@ -274,7 +231,6 @@
 
 <div class="wrap">
 
-    <!-- Hero header -->
     <div class="hero">
         <div>
             <div class="hero-eyebrow">Tour catalog</div>
@@ -284,7 +240,6 @@
         <a asp-action="Create" class="btn-add">+ Add New Tour</a>
     </div>
 
-    <!-- Stats -->
     <div class="stats">
         <div class="stat">
             <div class="stat-icon">🗺️</div>
@@ -303,14 +258,12 @@
         </div>
     </div>
 
-    <!-- Section title -->
     <div class="section-header">
         <div class="section-title">
             Tours <span class="badge-count">@Model.Count() total</span>
         </div>
     </div>
 
-    <!-- Empty state -->
     @if (!Model.Any())
     {
         <div class="empty">
@@ -320,7 +273,6 @@
     }
     else
     {
-        <!-- Cards grid -->
         <div class="tours-grid">
             @foreach (var tour in Model)
             {
@@ -342,6 +294,4 @@
             }
         </div>
     }
-
 </div>
->>>>>>> Stashed changes
