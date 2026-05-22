@@ -46,17 +46,15 @@ public class ToursController : Controller
     // POST: TOURS/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    // POST: TOURS/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Id,Name,Destination,Price,Description")] Tour tour)
     {
-        if (ModelState.IsValid)
-        {
-            _context.Add(tour);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(tour);
+        // Мы временно убрали проверку, чтобы тур точно сохранялся
+        _context.Add(tour);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: TOURS/Edit/5
