@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="README.md" />
+    <Compile Remove="TourManagementSystemContext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="TourManagementSystemContext.cs" />
   </ItemGroup>
 
   <ItemGroup>
