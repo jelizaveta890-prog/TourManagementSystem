@@ -41,7 +41,8 @@ Meie tiimi loodud rakendus on CRUD-tüüpi reisihaldussüsteem, mis mõeldud vä
   * Kirjutas C# backend-loogika ja pani paika andmebaasi poole (Entity Framework Core). Tegeles ka Giti repositooriumi haldamisega ja parandas koodis tekkinud bugisid.
 
 * **Johanna Tima** (Projektijuht / Disainer)
-  * Jälgis, et asjad saaksid õigeks ajaks valmis ja tegeles planeerimisega. 
+  * Jälgis, et asjad saaksid õigeks ajaks valmis ja tegeles planeerimisega.
+  * Aitas kaasa veebilehe disaini loomisele ning pakkus välja erinevaid disainiideid.
 
 * **Jelizaveta Sukhomlynova** (Testija / Dokumenteerija)
   * Testis programmi funktsioonid läbi (kontrollis, et Details, Edit ja Delete nupud reaalselt töötaksid ilma vigadeta). Pani kokku projekti lõppdokumentatsiooni ja selle sama `README.md` faili.
