@@ -1,7 +1,7 @@
-﻿# Tour Management System
+﻿# Tour Management System - Reisihaldussüsteem
 
 ### Projekti kirjeldus
-Antud rakendus on CRUD-tüüpi reisihaldussüsteem, mis on loodud reisibüroole. Süsteem loodi selleks, et asendada senine ebaefektiivne tabelipõhine reiside haldus digitaalse ja turvalise veebirakendusega. Süsteem võimaldab administraatoritel reise lisada, olemasolevaid reise vaadata, nende andmeid muuta ning vajadusel reise nimekirjast kustutada.
+Meie tiimi loodud rakendus on CRUD-tüüpi reisihaldussüsteem, mis mõeldud väiksemale reisibüroole. Projekti eesmärk oli asendada seni kasutatud tüütu Exceli tabelite põhine majandamine korraliku ja turvalise veebirakendusega. Süsteemis saab administraator uusi reise juurde lisada, olemasolevaid pakette vaadata, nende andmeid/hindu muuta ja vanu või aegunud reise nimekirjast kustutada.
 
 ### Sihtkasutajad
 * Reisibüroo administraatorid
@@ -9,40 +9,39 @@ Antud rakendus on CRUD-tüüpi reisihaldussüsteem, mis on loodud reisibüroole.
 
 ### Kasutatud tehnoloogiad
 * **Backend:** C# (.NET Core)
-* **Andmebaasi raamistik:** Entity Framework Core (SQL Server, Code-First lähenemine)
+* **Andmebaas ja ORM:** Entity Framework Core (SQL Server, kasutasime Code-First lähenemist)
 * **Frontend:** ASP.NET Core Razor Views (HTML5, CSS3)
-* **Disainiraamistik:** Bootstrap 5 (põhineb puhtal ja kaasaegsel kaartide süsteemil)
+* **Disain:** Bootstrap 5 (kasutasime valmis kaartide süsteemi, et leht näeks kaasaegne välja)
 
-### Paigaldusjuhend
-1. Klooni antud repositoorium oma arvutisse, kasutades git clone käsku.
+### Paigaldusjuhend (Kuidas käivitada)
+1. Tõmba projekt endale arvutisse (klooni repositoorium `git clone` käsuga või laadi zip-failina alla).
 2. Ava fail `TourManagementSystem.sln` programmiga Microsoft Visual Studio.
-3. Kontrolli üle andmebaasi ühendussõne (Connection String) failis `appsettings.json`, et see sobiks sinu kohaliku SQL Serveriga.
-4. Vajuta Visual Studios **Run** (roheline kolmnurk) või klaviatuuril `F5`.
-5. Rakendus loob käivitumisel automaatselt vajaliku andmebaasi ja tabelid tänu `context.Database.EnsureCreated()` funktsioonile.
+3. Vaata üle andmebaasi ühendussõne (*Connection String*) failis `appsettings.json`, et see sobiks sinu kohaliku SQL Serveriga (LocalDB).
+4. Vajuta Visual Studios rohelist **Run** nuppu või klaviatuuril `F5`.
+5. Kuna koodis on kasutusel `context.Database.EnsureCreated()`, siis teeb programm esimesel käivitamisel vajaliku andmebaasi ja tabelid ise valmis.
 
 ### Kasutusjuhend
-* **Pealeht (Index):** Rakenduse käivitumisel avaneb kohe reiside kataloog (Tours Catalog), kus on näha reiside kaardid koos hindade ja sihtkohtadega.
-* **Uue reisi lisamine (Create):** Vajuta nupule "+ Add New Tour", täida väljad ja salvesta.
-* **Andmete vaatamine (Details):** Vajuta reisi kaardil nupule "Details", et näha reisi üksikasju.
-* **Muutmine (Edit):** Vajuta nupule "Edit", muuda andmed ja uuenda.
-* **Kustutamine (Delete):** Vajuta nupule "Delete", süsteem küsib kinnitust ja seejärel eemaldab reisi andmebaasist.
+* **Pealeht (Index):** Kui rakendus käivitub, avaneb kohe reiside kataloog (*Tours Catalog*), kus on näha kõik reisid kaartidena koos hindade ja sihtkohtadega.
+* **Uue reisi lisamine (Create):** Klikka nupule "+ Add New Tour", täida lahtrid ja salvesta ära.
+* **Andmete vaatamine (Details):** Klikka reisi kaardil nuppu "Details" ja näed täpsemat infot selle reisi kohta.
+* **Muutmine (Edit):** Vali reisi juurest "Edit", muuda vajalikud väljad ja uuenda andmed.
+* **Kustutamine (Delete):** Vali nupp "Delete", süsteem küsib igaks juhuks kinnitust ja pärast seda kustutab reisi andmebaasist ära.
 
-### Tehisintellekti (AI) kasutamise dokumentatsioon
+### Tehisintellekti (AI) kasutamine
 * **Kasutatud tööriist:** Gemini (Google)
-* **Dokumenteeritud tegevus:** Tehisintellekti kasutati koodi refaktoreerimiseks (üleliigsete lokaliseerimisseadete eemaldamiseks failist `Program.cs`), Razor vaadete vigade tuvastamiseks (näiteks `@item.Id` muutuja parandamine `Details.cshtml` lehel) ning ingliskeelsele disainile ülemineku toetamiseks. Kogu rakenduse baasfunktsionaalsus ja CRUD-loogika tugineb standardsetele õppematerjalidele.
+* **Milleks kasutasime:** AI-st oli abi koodi puhastamisel (võtsime failist `Program.cs` välja üleliigsed lokaliseerimise seaded), Razor vaadete vigade otsimisel (näiteks parandasime ära `@item.Id` muutuja vea `Details.cshtml` lehel) ning aitas liidest ingliskeelseks teha. Projekti põhimõtteline loogika ja CRUD-funktsioonid on tehtud ise loengumaterjalide põhjal.
 
-### Kasutatud allikad ja viited
-* Microsoft Learn: ASP.NET Core MVC koonddokumentatsioon
-* Bootstrap 5: Küljenduse, kaartide (Cards) ja nuppude dokumentatsioon
+### Kasutatud allikad
+* Microsoft Learn: ASP.NET Core MVC õppematerjalid ja dokumentatsioon
+* Bootstrap 5: Küljenduse, nuppude ja kaartide (Cards) näidised ja koodid
 
+### Autorid ja rollide jaotus
 
-### Autorid ja rollid
+* **Liliia Melnyk** (Full-stack arendaja)
+  * Kirjutas C# backend-loogika ja pani paika andmebaasi poole (Entity Framework Core). Tegeles ka Giti repositooriumi haldamisega ja parandas koodis tekkinud bugisid.
 
-* ** Liliia Melnyk ** — *Roll: Full-stack arendaja*
-  * Teostas C# backend loogika ja andmebaasi liidestamise (Entity Framework Core). Hallata Giti repositooriumi ja lahendas koodis esinenud vead.
+* **Johanna Tima** (Projektijuht / Disainer)
+  * Jälgis, et asjad saaksid õigeks ajaks valmis ja tegeles planeerimisega. 
 
-* ** Johanna Tima ** — *Roll: Projektijuht / UI/UX Disainer*
-  * Juhtis projekti tähtaegu ja planeerimist. Vastutas visuaalse poole eest: disainis kaasaegse rohelise bänneri, reiside kaardid (Cards) ning tagas liidese puhta välimuse.
-
-* ** Jelizaveta Sukhomlynova ** — *Roll: Testija / Dokumenteerija*
-  * Viis läbi rakenduse funktsionaalsuse testimise (Details, Edit ja Delete funktsioonide kontroll). Koostas projekti lõppdokumentatsiooni ja `README.md` faili.
+* **Jelizaveta Sukhomlynova** (Testija / Dokumenteerija)
+  * Testis programmi funktsioonid läbi (kontrollis, et Details, Edit ja Delete nupud reaalselt töötaksid ilma vigadeta). Pani kokku projekti lõppdokumentatsiooni ja selle sama `README.md` faili.
