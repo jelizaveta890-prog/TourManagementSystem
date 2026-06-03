@@ -24,12 +24,11 @@ Tour Management System on ASP.NET Core MVC veebirakendus reiside haldamiseks. S�
 - Vaata üksikasju nupuga **Details**.
 - Kustuta reis nupuga **Delete**.
 
-Rollide jaotus
+## Rollide jaotus
 
 * **Liliia Melnyk** (Full-stack arendaja)
-  * Kirjutas C# backend’i ja pani paika andmebaasi poole (Entity Framework Core). 
-  * Tegeles ka Giti repositooriumi haldamisega ja parandas koodis tekkinud vigu.
-
+*Kirjutas C# backend’i ja pani paika andmebaasi poole (Entity Framework Core). 
+*Tegeles ka Giti repositooriumi haldamisega ja parandas koodis tekkinud vigu.
 
 * **Johanna Tima** (Projektijuht/Disainer)
 *Jälgis, et asjad saaksid õigeks ajaks valmis ja tegeles planeerimisega.
